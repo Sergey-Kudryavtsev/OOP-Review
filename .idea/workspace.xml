@@ -4,15 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ce16436-213e-4b59-96e4-f4e1fe45c797" name="Changes" comment="Создал класс Publication">
+    <list default="true" id="1ce16436-213e-4b59-96e4-f4e1fe45c797" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/file.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/BasicsReview/ContactAccountingSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson1/NumException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson2/ExceptionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson3/Lesson3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson3/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson4/Hotel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson4/InvalidRoomNumberException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson4/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson4/RoomNotAvailableException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionJava/Lesson5/Lesson5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/ItemNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/Library.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/MainException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/NoAvailableCopiesException.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Library.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Magazine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Newspaper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Printable.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPinJava/Lesson1Book.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPinJava/Lesson2/Person.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPinJava/Lesson3/Car.java" afterDir="false" />
@@ -33,6 +41,7 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPinJava/Lesson7/Book.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPinJava/Lesson7/Library.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/serega/ExceptionReview/Book.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/serega/OOPReview/Publication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +52,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -97,20 +105,7 @@
       <recent name="org.serega" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.org.serega.OOPReview.Main">
-    <configuration name="Library" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.serega.OOPinJava.Lesson7.Library" />
-      <module name="SorocinSchool" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.serega.OOPinJava.Lesson7.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.MainException">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.serega.OOPinJava.Lesson6.Main" />
       <module name="SorocinSchool" />
@@ -124,12 +119,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="org.serega.OOPReview.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.serega.OOPReview.Main" />
+    <configuration name="MainException" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.serega.ExceptionReview.MainException" />
       <module name="SorocinSchool" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.serega.OOPReview.*" />
+          <option name="PATTERN" value="org.serega.ExceptionReview.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -139,11 +134,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.org.serega.OOPReview.Main" />
+        <item itemvalue="Application.MainException" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Library" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.org.serega.OOPReview.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -155,18 +147,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748154813262</updated>
-      <workItem from="1748154814567" duration="11204000" />
-      <workItem from="1748604985467" duration="1127000" />
-      <workItem from="1748769629222" duration="4088000" />
+      <workItem from="1748154814567" duration="4258000" />
     </task>
-    <task id="LOCAL-00001" summary="Создал класс Publication">
-      <created>1748160178481</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1748160178481</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,14 +159,22 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Создал класс Publication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создал класс Publication" />
   </component>
 </project>
