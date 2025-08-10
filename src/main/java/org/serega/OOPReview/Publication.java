@@ -2,7 +2,7 @@ package org.serega.OOPReview;
 
 import java.util.Objects;
 
-public abstract class Publication implements Printable {
+public abstract class Publication {
     private String title;
     private String author;
     private int year;
