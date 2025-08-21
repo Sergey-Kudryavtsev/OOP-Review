@@ -1,0 +1,1753 @@
+Index: src/main/java/org/serega/ExceptionJava/Lesson4/Hotel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson4/Hotel.java b/src/main/java/org/serega/ExceptionJava/Lesson4/Hotel.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson4/Hotel.java	
+@@ -0,0 +1,23 @@
++package org.serega.ExceptionJava.Lesson4;
++
++import java.util.ArrayList;
++import java.util.List;
++
++public class Hotel {
++//    boolean [] roomNumbers = new boolean[1000];
++    private List<Integer> bookRooms = new ArrayList<>();
++    public void bookRoom(int roomNumber) throws RoomNotAvailableException {
++
++        if (bookRooms.contains(roomNumber)) {
++            throw new RoomNotAvailableException("Номер " + roomNumber + " уже забронирован");
++        }
++
++        if (roomNumber < 1 || roomNumber > 1000) {
++            throw new InvalidRoomNumberException("Некорректный номер комнаты - " + roomNumber);
++        }
++
++        bookRooms.add(roomNumber);
++        System.out.println("Номер " + roomNumber + " успешно забронирован");
++
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson3/Lesson3.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson3/Lesson3.java b/src/main/java/org/serega/ExceptionJava/Lesson3/Lesson3.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson3/Lesson3.java	
+@@ -0,0 +1,32 @@
++package org.serega.ExceptionJava.Lesson3;
++
++import java.util.logging.Logger;
++
++public class Lesson3 {
++    double number1;
++    double number2;
++    private Double DivisionResult = null;
++    private Double result = null;
++    private String errorMessage = null;
++
++    public Lesson3(double number1, double number2) {
++        this.number1 = number1;
++        this.number2 = number2;
++    }
++
++    public void comply() {
++        if (number2 == 0) {
++            errorMessage = "Деление на ноль!";
++            throw new ArithmeticException("Делить на ноль нельзя");
++        }
++        result = number1 / number2;
++    }
++
++    public String getDivisionResult() {
++        if (errorMessage != null) {
++            return String.format("Деление %.1f / %.1f завершилось ошибкой: %s", number1, number2, errorMessage);
++        }else {
++            return String.format("Деление %.1f / %.1f = %.2f", number1, number2, result);
++        }
++    }
++}
+Index: src/main/java/org/serega/ExceptionReview/NoAvailableCopiesException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionReview/NoAvailableCopiesException.java b/src/main/java/org/serega/ExceptionReview/NoAvailableCopiesException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionReview/NoAvailableCopiesException.java	
+@@ -0,0 +1,8 @@
++package org.serega.ExceptionReview;
++
++public class NoAvailableCopiesException extends Exception {
++
++    public NoAvailableCopiesException(String message) {
++        super(message);
++    }
++}
+Index: src/main/java/org/serega/ExceptionReview/Library.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionReview/Library.java b/src/main/java/org/serega/ExceptionReview/Library.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionReview/Library.java	
+@@ -0,0 +1,60 @@
++package org.serega.ExceptionReview;
++
++public class Library {
++    private static final int MAX_BOOKS = 50;
++    public Book[] catalog;
++    private int countBook;
++
++    public Library() {
++       catalog = new Book[MAX_BOOKS];
++       countBook = 0;
++    }
++
++    public void addBook(String title, String author, int copies) {
++        if (countBook >= MAX_BOOKS){
++            System.out.println("Каталог книг заполнен.");
++            return;
++        }
++        Book book = new Book(title, author, copies);
++        catalog[countBook++] = book;
++        System.out.println("Книга успешно добавлена.");
++    }
++
++    private Book searchBookByTitle(String title) {
++        for (int i = 0; i < countBook; i++) {
++            if (catalog[i].getTitle().equalsIgnoreCase(title)) {
++                return catalog[i];
++            }
++        }
++        return null;
++    }
++
++    public void takeBook(String title) throws ItemNotFoundException, NoAvailableCopiesException {
++        Book book = searchBookByTitle(title);
++        if (book == null) {
++            throw new ItemNotFoundException("Книга - " + title + " не найдена");
++        }
++        book.issuance();
++        System.out.println("Книга выдана: " + title);
++    }
++
++    public void returnBook(String title) throws ItemNotFoundException, NoAvailableCopiesException{
++        Book book = searchBookByTitle(title);
++        if (book == null) {
++            throw new ItemNotFoundException("Книга - " + title + " не найдена");
++        }
++        book.returnBook();
++        System.out.println("Книга возвращена: " + title);
++    }
++
++    public void listBook() {
++        if (countBook == 0) {
++            System.out.println("В каталоге нет книг.");
++        }else {
++            System.out.println("Список пуст.");
++            for (int i = 0; i < countBook; i++) {
++                System.out.println(catalog[i]);
++            }
++        }
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson1Book.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson1Book.java b/src/main/java/org/serega/OOPinJava/Lesson1Book.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson1Book.java	
+@@ -0,0 +1,26 @@
++package org.serega.OOPinJava;
++
++import java.io.PrintStream;
++import java.io.UnsupportedEncodingException;
++
++public class Lesson1Book {
++    public String title;
++    public String author;
++    public int pages;
++
++    public Lesson1Book(String title, String author, int pages) {
++        this.title = title;
++        this.author = author;
++        this.pages = pages;
++    }
++
++    public void read() {
++        System.out.println("Я читаю книгу- " + this.title + ", автор- " + this.author);
++    }
++
++    public static void main(String[] args) throws UnsupportedEncodingException {
++        System.setOut(new PrintStream(System.out, true, "UTF-8"));
++        Lesson1Book book = new Lesson1Book("Война и Мир", "Лев Толстой", 456);
++        book.read();
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson5/Account.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson5/Account.java b/src/main/java/org/serega/OOPinJava/Lesson5/Account.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson5/Account.java	
+@@ -0,0 +1,18 @@
++package org.serega.OOPinJava.Lesson5;
++
++public abstract class Account {
++    protected double balance;
++
++    public Account(int balance) {
++        this.balance = (double)balance;
++    }
++
++    public void deposit(double amount) {
++        if (amount < 0.0) {
++            this.balance += amount;
++        }
++
++    }
++
++    public abstract void withdraw(double var1);
++}
+Index: src/main/java/org/serega/ExceptionReview/MainException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionReview/MainException.java b/src/main/java/org/serega/ExceptionReview/MainException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionReview/MainException.java	
+@@ -0,0 +1,77 @@
++package org.serega.ExceptionReview;
++
++import java.util.Scanner;
++
++public class MainException {
++    public static void main(String[] args) {
++        Library library = new Library();
++
++        try (Scanner scanner = new Scanner(System.in)){
++            boolean exit = false;
++
++            while (!exit) {
++                System.out.println("""
++                        Меню:
++                        1. Вывести каталог.
++                        2. Добавить объект.
++                        3. Выдать объект.
++                        4. Вернуть объект.
++                        5. Выйти из приложения.
++                        """);
++                System.out.println("Выберите пункт меню: ");
++                String input = scanner.nextLine();
++
++                int choice;
++
++                try {
++                    choice = Integer.parseInt(input);
++                }catch (NumberFormatException e) {
++                    System.out.println("Ошибка. Введите число от 1 до 5.");
++                    continue;
++                }
++
++                switch (choice) {
++                    case 1 -> library.listBook();
++                    case 2 -> {
++                        System.out.println("Введите название книги: ");
++                        String title = scanner.nextLine();
++                        System.out.println("Введите автора: ");
++                        String author = scanner.nextLine();
++                        System.out.println("Введите количество экземпляров: ");
++                        int copies;
++                        try {
++                            copies = Integer.parseInt(scanner.nextLine());
++                        }catch (NumberFormatException e) {
++                            System.out.println("Введите количество числом.");
++                            break;
++                        }
++                        library.addBook(title, author,copies);
++                    }
++                    case 3 -> {
++                        System.out.println("Для выдачи введите название книги: ");
++                        String takeTitle = scanner.nextLine();
++                        try {
++                            library.takeBook(takeTitle);
++                        }catch (ItemNotFoundException | NoAvailableCopiesException e) {
++                            System.out.println("Ошибка: " + e.getMessage());
++                        }
++                    }
++                    case 4 -> {
++                        System.out.println("Для возврата введите название книги: ");
++                        String returnTitle = scanner.nextLine();
++                        try {
++                            library.returnBook(returnTitle);
++                        }catch (ItemNotFoundException | NoAvailableCopiesException e) {
++                            System.out.println("Ошибка: " + e.getMessage());
++                        }
++                    }
++                    case 5 -> {
++                        exit = true;
++                        System.out.println("Выход из приложения. До свидания!");
++                    }
++                    default -> System.out.println("Не верный пункт меню, попробуйте заново.");
++                }
++            }
++        }
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson2/ExceptionTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson2/ExceptionTest.java b/src/main/java/org/serega/ExceptionJava/Lesson2/ExceptionTest.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson2/ExceptionTest.java	
+@@ -0,0 +1,47 @@
++package org.serega.ExceptionJava.Lesson2;
++
++import java.io.BufferedReader;
++import java.io.FileReader;
++import java.io.IOException;
++
++public class ExceptionTest {
++
++    public static String readerFile(String fileName) throws IOException {
++        BufferedReader reader = null;
++        try {
++            reader = new BufferedReader(new FileReader(fileName));
++            return reader.readLine();
++        }finally {
++            if (reader != null) {
++                reader.close();
++            }
++        }
++    }
++
++    public static void getIndex() {
++        int[] arr = {1,2,3};
++        System.out.println(arr[10]);
++    }
++
++    public static void main(String[] args) {
++        try {
++            String firstLine = readerFile("text.txt");
++            System.out.println("Первая строка - " + firstLine);
++        } catch (IOException e) {
++            System.out.println("Ошибка при чтении файла: " + e.getMessage());
++        }
++
++        try {
++            getIndex();
++        }catch (ArrayIndexOutOfBoundsException e) {
++            System.out.println("Неправильный индекс массива: " + e.getMessage());
++        }
++
++        //Общий блок обработки любых исключений
++        try {
++            throw new IllegalArgumentException("Искусственная ошибка аргумента");
++        }catch (Exception e) {
++            System.out.println("Перехвачено исключение: " + e.getClass().getSimpleName() + " - Сообщение: " + e.getMessage());
++        }
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson4/Square.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson4/Square.java b/src/main/java/org/serega/OOPinJava/Lesson4/Square.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson4/Square.java	
+@@ -0,0 +1,18 @@
++package org.serega.OOPinJava.Lesson4;
++
++public class Square extends Shape {
++    private double side;
++
++    public Square(double side) {
++        this.side = side;
++    }
++
++    public void draw() {
++        super.draw();
++        System.out.println("Drawing a Square");
++    }
++
++    public double calculateArea() {
++        return this.side * this.side;
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson4/Canvas.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson4/Canvas.java b/src/main/java/org/serega/OOPinJava/Lesson4/Canvas.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson4/Canvas.java	
+@@ -0,0 +1,16 @@
++package org.serega.OOPinJava.Lesson4;
++
++public class Canvas {
++    public static void main(String[] args) {
++        Shape[] shapes = new Shape[]{
++                new Circle(4.0),
++                new Square(5.0),
++                new Triangle(6.0, 4.0)};
++
++        for (Shape shape : shapes) {
++            shape.draw();
++            System.out.println("Area - " + shape.calculateArea());
++            System.out.println();
++        }
++    }
++}
+Index: src/main/java/org/serega/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Main.java b/src/main/java/org/serega/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Main.java	
+@@ -0,0 +1,4 @@
++package org.serega;
++
++public class Main {
++}
+Index: file.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+diff --git a/file.txt b/file.txt
+new file mode 100644
+--- /dev/null	
++++ b/file.txt	
+@@ -0,0 +1,20 @@
++В этот лес завороженный,
++По пушинкам серебра,
++Я с винтовкой заряженной
++На охоту шел вчера.
++По дорожке чистой, гладкой
++Я прошел, не наследил…
++Кто ж катался здесь украдкой?
++Кто здесь падал и ходил?
++Подойду, взгляну поближе:
++Хрупкий снег изломан весь.
++Здесь вот когти, дальше — лыжи…
++Кто-то странный бегал здесь.
++Кабы твердо знал я тайну
++Заколдованным речам,
++Я узнал бы хоть случайно,
++Кто здесь бродит по ночам.
++Из-за елки бы высокой
++Подсмотрел я на кругу:
++Кто глубокий след далекий
++Оставляет на снегу?..
+\ No newline at end of file
+Index: src/main/java/org/serega/OOPinJava/Lesson5/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson5/Main.java b/src/main/java/org/serega/OOPinJava/Lesson5/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson5/Main.java	
+@@ -0,0 +1,17 @@
++package org.serega.OOPinJava.Lesson5;
++
++public class Main {
++    public static void main(String[] args) {
++        Account saving = new SavingAccount(1000);
++        Account credit = new CreditAccount(500, 1000.0);
++        saving.deposit(200.0);
++        credit.deposit(300.0);
++        saving.withdraw(1500.0);
++        credit.withdraw(2000.0);
++        credit.withdraw(1500.0);
++        Printable printable1 = (Printable)saving;
++        Printable printable2 = (Printable)credit;
++        printable1.printInfo();
++        printable2.printInfo();
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson5/CreditAccount.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson5/CreditAccount.java b/src/main/java/org/serega/OOPinJava/Lesson5/CreditAccount.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson5/CreditAccount.java	
+@@ -0,0 +1,23 @@
++package org.serega.OOPinJava.Lesson5;
++
++public class CreditAccount extends Account implements Printable {
++    private double creditLimit;
++
++    public CreditAccount(int balance, double creditLimit) {
++        super(balance);
++        this.creditLimit = creditLimit;
++    }
++
++    public void withdraw(double amount) {
++        if (amount > 0.0 && this.balance - amount >= -this.creditLimit) {
++            this.balance -= amount;
++        } else {
++            System.out.println("The credit limit is exceeded or the amount is incorrect.");
++        }
++
++    }
++
++    public void printInfo() {
++        System.out.println("\nCreditAccount: " + this.balance + "\nCredit Limit: " + this.creditLimit);
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson4/InvalidRoomNumberException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson4/InvalidRoomNumberException.java b/src/main/java/org/serega/ExceptionJava/Lesson4/InvalidRoomNumberException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson4/InvalidRoomNumberException.java	
+@@ -0,0 +1,8 @@
++package org.serega.ExceptionJava.Lesson4;
++
++public class InvalidRoomNumberException extends RuntimeException {
++
++    public InvalidRoomNumberException(String message) {
++        super(message);
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson6/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson6/Main.java b/src/main/java/org/serega/OOPinJava/Lesson6/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson6/Main.java	
+@@ -0,0 +1,11 @@
++package org.serega.OOPinJava.Lesson6;
++
++public class Main {
++    public static void main(String[] args) {
++        Player player1 = new Player("Alex", 123);
++        Player player2 = new Player("Julia", 234);
++
++        GameScore.getTotalScore();
++    }
++
++ }
+Index: src/main/java/org/serega/ExceptionJava/Lesson4/RoomNotAvailableException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson4/RoomNotAvailableException.java b/src/main/java/org/serega/ExceptionJava/Lesson4/RoomNotAvailableException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson4/RoomNotAvailableException.java	
+@@ -0,0 +1,9 @@
++package org.serega.ExceptionJava.Lesson4;
++
++public class RoomNotAvailableException extends RuntimeException {
++
++    public RoomNotAvailableException(String message) {
++        super(message);
++    }
++
++}
+Index: src/main/java/org/serega/Collection/Lesson1/GenericBox.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson1/GenericBox.java b/src/main/java/org/serega/Collection/Lesson1/GenericBox.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson1/GenericBox.java	
+@@ -0,0 +1,56 @@
++package org.serega.Collection.Lesson1;
++
++public class GenericBox<T> {
++    private T box;
++
++    public GenericBox(T box) {
++        this.box = box;
++    }
++
++    public T getBox() {
++        return box;
++    }
++
++    public void setBox(T box) {
++        this.box = box;
++    }
++
++    public boolean compare(GenericBox<T> otherBox) {
++        return this.box.equals(otherBox.getBox());
++    }
++
++    public void swap(GenericBox<T> other) {
++        T temp = this.box;
++        this.box = other.box;
++        other.box = temp;
++    }
++
++    @Override
++    public String toString() {
++        return "Коробка - " + ((box != null) ? box.toString() : "null");
++    }
++
++    public static void main(String[] args) {
++        GenericBox<Integer> intBox = new GenericBox<>(100);
++        System.out.println("Содержимое intBox: " + intBox.getBox());
++
++
++        GenericBox<String> strBox1 = new GenericBox<>("Hello Java");
++        System.out.println("Содержимое strBox: " + strBox1.getBox());
++
++        GenericBox<String> strBox2 = new GenericBox<>("Hello Serega");
++        System.out.println("Содержимое strBox: " + strBox2.getBox());
++        System.out.println("До обмена");
++        System.out.println(strBox1);
++        System.out.println(strBox2);
++
++        strBox1.swap(strBox2);
++
++        System.out.println("После обмена");
++        System.out.println(strBox1);
++        System.out.println(strBox2);
++
++        GenericBox<String> anotherBox = new GenericBox<>("Hello Java");
++        System.out.println("Коробки с одинаковым содержимым равны: " + strBox1.compare(anotherBox));
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson3/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson3/Main.java b/src/main/java/org/serega/OOPinJava/Lesson3/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson3/Main.java	
+@@ -0,0 +1,16 @@
++package org.serega.OOPinJava.Lesson3;
++
++public class Main {
++    public static void main(String[] args) {
++        Car myCar = new Car();
++        myCar.setBrand("BMW");
++        myCar.setModel("X1");
++        myCar.setYear(1880);
++        System.out.println(myCar);
++        Car myCar2 = new Car();
++        myCar2.setBrand("BMW");
++        myCar2.setModel("X1");
++        myCar2.setYear(2000);
++        System.out.println(myCar2);
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson5/Lesson5.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson5/Lesson5.java b/src/main/java/org/serega/ExceptionJava/Lesson5/Lesson5.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson5/Lesson5.java	
+@@ -0,0 +1,37 @@
++package org.serega.ExceptionJava.Lesson5;
++
++import java.io.BufferedReader;
++import java.io.FileNotFoundException;
++import java.io.FileReader;
++import java.io.IOException;
++import java.util.InputMismatchException;
++import java.util.Scanner;
++
++public class Lesson5 {
++    public static void main(String[] args) {
++        System.out.println("Введите путь к файлу");
++        Scanner scanner = new Scanner(System.in);
++        String pathFile = scanner.nextLine();
++        try {
++            BufferedReader reader = new BufferedReader(new FileReader(pathFile));
++            String line = reader.readLine();
++            if (line != null) {
++                System.out.println("Первая строка из файла: \n" + line);
++                String[] count = line.split("\\s");
++                System.out.println("Количество слов в строке - " + count.length);
++            }else {
++                System.out.println("Файл пуст");
++            }
++
++        }catch (FileNotFoundException e) {
++            System.out.println("Файл не найден: " + e.getMessage());
++
++        } catch (IOException e) {
++            System.out.println("Произошла ошибка чтения файла" + e.getMessage());
++        }catch (InputMismatchException e) {
++            System.out.println("Введите корректное название в консоли " + e.getMessage());
++        } finally {
++            System.out.println("Спасибо за использование программы");
++        }
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson4/Triangle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson4/Triangle.java b/src/main/java/org/serega/OOPinJava/Lesson4/Triangle.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson4/Triangle.java	
+@@ -0,0 +1,21 @@
++package org.serega.OOPinJava.Lesson4;
++
++public class Triangle extends Shape {
++    private double base;
++    private double height;
++
++    public Triangle(double base, double height) {
++        this.base = base;
++        this.height = height;
++    }
++
++    public void draw() {
++        super.draw();
++        System.out.println("Drawing a Triangle");
++    }
++
++    public double calculateArea() {
++        return 0.5 * this.base * this.height;
++    }
++}
++
+Index: src/main/java/org/serega/OOPinJava/Lesson4/Shape.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson4/Shape.java b/src/main/java/org/serega/OOPinJava/Lesson4/Shape.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson4/Shape.java	
+@@ -0,0 +1,12 @@
++package org.serega.OOPinJava.Lesson4;
++
++public abstract class Shape {
++    public Shape() {
++    }
++
++    public void draw() {
++        System.out.println("Drawing a generic shape");
++    }
++
++    public abstract double calculateArea();
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson5/SavingAccount.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson5/SavingAccount.java b/src/main/java/org/serega/OOPinJava/Lesson5/SavingAccount.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson5/SavingAccount.java	
+@@ -0,0 +1,20 @@
++package org.serega.OOPinJava.Lesson5;
++
++public class SavingAccount extends Account implements Printable {
++    public SavingAccount(int balance) {
++        super(balance);
++    }
++
++    public void withdraw(double amount) {
++        if (amount > 0.0 && amount <= this.balance) {
++            this.balance -= amount;
++        } else {
++            System.out.println("Insufficient funds or incorrect withdrawal amount.");
++        }
++
++    }
++
++    public void printInfo() {
++        System.out.println("\nSavingAccount: " + this.balance);
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson6/GameScore.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson6/GameScore.java b/src/main/java/org/serega/OOPinJava/Lesson6/GameScore.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson6/GameScore.java	
+@@ -0,0 +1,14 @@
++package org.serega.OOPinJava.Lesson6;
++
++public class GameScore {
++    protected static int totalScore = 0;
++
++    public static void addPoints(int points) {
++        totalScore += points;
++        System.out.println("Количество очков добавлено: " + points + "\nОбщий счет: " + totalScore);
++        System.out.println("");
++    }
++    public static int getTotalScore() {
++        return totalScore;
++    }
++}
+Index: src/main/java/org/serega/Collection/Lesson7/DuplicateChecker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson7/DuplicateChecker.java b/src/main/java/org/serega/Collection/Lesson7/DuplicateChecker.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson7/DuplicateChecker.java	
+@@ -0,0 +1,49 @@
++package org.serega.Collection.Lesson7;
++
++import java.util.ArrayList;
++import java.util.HashSet;
++import java.util.List;
++
++public class DuplicateChecker {
++    public static void main(String[] args) {
++        List<Integer> numbers = new ArrayList<>();
++        // Заполнение списка числами от 0 до 100000 с дублированием одного значения
++        for (int i = 0; i <= 100000; i++) {
++            numbers.add(i);
++        }
++        numbers.add(50000); // Вставляем дубликат
++
++        boolean hasDuplicates = false;
++        for (int i = 0; i < numbers.size(); i++) {
++            for (int j = i + 1; j < numbers.size(); j++) {
++                if (numbers.get(i).equals(numbers.get(j))) {
++                    hasDuplicates = true;
++                    break;
++                }
++            }
++            if (hasDuplicates) break;
++        }
++        System.out.println("Дубликаты найдены: " + hasDuplicates);
++
++// Дает линейное время производительности, т.к используется хэширование.
++        HashSet<Integer> numberDub = new HashSet<>(numbers);
++        boolean exists = numberDub.size() != numbers.size();
++        System.out.println("Дубликаты найдены в HashSet: " + exists);
++
++
++        int target = numbers.size() - 1;
++
++        //Время в ArrayList
++        long startTime = System.nanoTime();
++        boolean foundInList = numbers.contains(target);
++        long durationList = System.nanoTime() - startTime;
++        System.out.println("ArrayList содержит элемент? " + foundInList + ". Время поиска: " + durationList + " нс");
++
++        // Время в HashSet
++        startTime = System.nanoTime();
++        boolean foundInSet = numberDub.contains(target);
++        long durationSet = System.nanoTime() - startTime;
++        System.out.println("HashSet содержит элемент? " + foundInSet + ". Время поиска: " + durationSet + " нс");
++    }
++}
++
+Index: src/main/java/org/serega/OOPinJava/Lesson2/Person.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson2/Person.java b/src/main/java/org/serega/OOPinJava/Lesson2/Person.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson2/Person.java	
+@@ -0,0 +1,52 @@
++package org.serega.OOPinJava.Lesson2;
++
++public class Person {
++    public String name;
++    public int age;
++
++    public Person(String name, int age) {
++        this.name = name;
++        this.age = age;
++    }
++
++    public String getName() {
++        return this.name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public int getAge() {
++        return this.age;
++    }
++
++    public void setAge(int age) {
++        this.age = age;
++    }
++
++    protected void finalize() throws Throwable {
++        System.out.println("Object delete");
++        super.finalize();
++    }
++
++    public void info() {
++        System.out.println("Name- " + this.name + "\nAge- " + this.age);
++    }
++
++    public static void main(String[] args) {
++        Person person = new Person("Alex", 18);
++        person.info();
++        person.setName("Glory");
++        person.info();
++        person = null;
++        System.gc();
++        if (person != null) {
++            person.info();
++        } else {
++            System.out.println("Access is not possible!");
++        }
++
++        System.out.println("Closed programing");
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson6/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson6/Player.java b/src/main/java/org/serega/OOPinJava/Lesson6/Player.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson6/Player.java	
+@@ -0,0 +1,13 @@
++package org.serega.OOPinJava.Lesson6;
++
++public class Player {
++    private String name;
++    private int personalScore;
++
++    public Player(String name, int personalScore) {
++        this.name = name;
++        this.personalScore = personalScore;
++        System.out.println("Имя: " + name + " Личный счет: " + personalScore);
++        GameScore.addPoints(personalScore);
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson3/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson3/Main.java b/src/main/java/org/serega/ExceptionJava/Lesson3/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson3/Main.java	
+@@ -0,0 +1,59 @@
++package org.serega.ExceptionJava.Lesson3;
++
++import java.util.ArrayList;
++import java.util.InputMismatchException;
++import java.util.List;
++import java.util.Scanner;
++import java.util.logging.Logger;
++
++public class Main {
++    private static final Logger logger = Logger.getLogger("Lesson3");
++
++    public static void main(String[] args) {
++        boolean flag = true;
++        List<Lesson3> history = new ArrayList<>();
++        Scanner scanner = new Scanner(System.in);
++
++        while (flag) {
++            try {
++                System.out.println("Введите первое число: ");
++                double number1 = scanner.nextDouble();
++                scanner.nextLine();
++
++                System.out.println("Введите второе число: ");
++                double number2 = scanner.nextDouble();
++                scanner.nextLine();
++
++                Lesson3 operation = new Lesson3(number1, number2);
++
++                try {
++                    operation.comply();
++                    logger.info("Успешное деление");
++                }catch (ArithmeticException e) {
++                    logger.severe("Ошибка деления");
++                    scanner.nextLine();
++                }
++                history.add(operation);
++            }catch (InputMismatchException e) {
++                logger.severe("Ошибка ввода");
++                scanner.nextLine();
++                continue;
++            }
++            System.out.println("Повторить операцию?");
++            String reply = scanner.nextLine();
++
++            if(!reply.equalsIgnoreCase("Да")) {
++                flag = false;
++            }
++        }
++
++        System.out.println("Работа завершена\n");
++        scanner.nextLine();
++
++
++        System.out.println("История операций: \n");
++        for (Lesson3 lesson3 : history){
++            System.out.println(lesson3.getDivisionResult());
++        }
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson4/Circle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson4/Circle.java b/src/main/java/org/serega/OOPinJava/Lesson4/Circle.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson4/Circle.java	
+@@ -0,0 +1,18 @@
++package org.serega.OOPinJava.Lesson4;
++
++public class Circle extends Shape {
++    private double radius;
++
++    public Circle(double radius) {
++        this.radius = radius;
++    }
++
++    public void draw() {
++        super.draw();
++        System.out.println("Drawing a Circle");
++    }
++
++    public double calculateArea() {
++        return Math.PI * this.radius * this.radius;
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson4/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson4/Main.java b/src/main/java/org/serega/ExceptionJava/Lesson4/Main.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson4/Main.java	
+@@ -0,0 +1,33 @@
++package org.serega.ExceptionJava.Lesson4;
++
++public class Main {
++    public static void main(String[] args) {
++        Hotel hotel = new Hotel();
++        int roomToBook = 111;
++
++        try {
++            hotel.bookRoom(111);
++            hotel.bookRoom(1001);
++        }catch (RoomNotAvailableException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }catch (InvalidRoomNumberException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }
++
++        try {
++            hotel.bookRoom(111);
++        }catch (RoomNotAvailableException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }catch (InvalidRoomNumberException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }
++
++        try {
++            hotel.bookRoom(100);
++        }catch (RoomNotAvailableException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }catch (InvalidRoomNumberException e) {
++            System.out.println("Ошибка: " + e.getMessage());
++        }
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson7/Library.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson7/Library.java b/src/main/java/org/serega/OOPinJava/Lesson7/Library.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson7/Library.java	
+@@ -0,0 +1,24 @@
++package org.serega.OOPinJava.Lesson7;
++
++public class Library {
++    public static void main(String[] args) {
++        Book book1 = new Book("Колобок", "Иван Иванов");
++        Book book2 = new Book("Колобок", "Иван Иванов");
++        Book book3 = new Book("Мастер и Маргарита", "Булгаков");
++        Book book4 = new Book("фыфыфыфы", "мипаиа");
++
++        System.out.println(book1.toString());
++        System.out.println(book2.toString());
++        System.out.println(book3.toString());
++        System.out.println();
++        System.out.println("book1 equals book2: " + book1.equals(book2));
++        System.out.println("book1 equals book3: " + book1.equals(book3));
++        System.out.println("book1 equals book4: " + book1.equals(book4));
++        System.out.println();
++        System.out.println("hashCode book1: " + book1.hashCode());
++        System.out.println("hashCode book2: " + book2.hashCode());
++        System.out.println("hashCode book3: " + book3.hashCode());
++        System.out.println("hashCode book4: " + book4.hashCode());
++
++    }
++}
+Index: src/main/java/org/serega/Collection/Lesson2/TaskList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson2/TaskList.java b/src/main/java/org/serega/Collection/Lesson2/TaskList.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson2/TaskList.java	
+@@ -0,0 +1,39 @@
++package org.serega.Collection.Lesson2;
++
++import java.util.ArrayList;
++import java.util.LinkedList;
++import java.util.List;
++
++public class TaskList {
++    public static void main(String[] args) {
++        List<String> list1 = new ArrayList<>();
++
++        list1.add("Проснуться");
++        list1.add("Умыться");
++        list1.add("По завтракать");
++
++        list1.add(2, "Сделать зарядку");
++        System.out.println("Вставка - " + list1);
++
++        list1.remove(0);
++        System.out.println("Удаление - " + list1);
++
++        System.out.println("Список задач: " + list1);
++
++        System.out.println();
++
++        List<String> list2 = new LinkedList<>();
++
++        list2.add("Проснуться");
++        list2.add("Умыться");
++        list2.add("По завтракать");
++
++        list2.add(2, "Сделать зарядку");
++        System.out.println("Вставка - " + list2);
++
++        list2.remove(1);
++        System.out.println("Удаление - " + list2);
++
++        System.out.println("Список задач: " + list2);
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson5/Printable.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson5/Printable.java b/src/main/java/org/serega/OOPinJava/Lesson5/Printable.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson5/Printable.java	
+@@ -0,0 +1,5 @@
++package org.serega.OOPinJava.Lesson5;
++
++public interface Printable {
++    void printInfo();
++}
+Index: src/main/java/org/serega/OOPReview/Publication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.serega.OOPReview;\r\n\r\nimport java.util.Objects;\r\n\r\npublic abstract class Publication implements Printable {\r\n    private String title;\r\n    private String author;\r\n    private int year;\r\n\r\n    private static int publicationCount = 0;\r\n\r\n    public Publication(String title, String author, int year) {\r\n        this.title = title;\r\n        this.author = author;\r\n        this.year = year;\r\n        publicationCount++;\r\n    }\r\n\r\n    public String getTitle() {\r\n        return title;\r\n    }\r\n\r\n    public void setTitle(String title) {\r\n        this.title = title;\r\n    }\r\n\r\n    public String getAuthor() {\r\n        return author;\r\n    }\r\n\r\n    public void setAuthor(String author) {\r\n        this.author = author;\r\n    }\r\n\r\n    public int getYear() {\r\n        return year;\r\n    }\r\n\r\n    public void setYear(int year) {\r\n        this.year = year;\r\n    }\r\n\r\n    public static void setPublicationCount(int publicationCount) {\r\n        Publication.publicationCount = publicationCount;\r\n    }\r\n\r\n    public abstract String getType();\r\n\r\n    @Override\r\n    public boolean equals(Object o) {\r\n        if (this == o) return true;\r\n        if (o == null || getClass() != o.getClass()) return false;\r\n        Publication that = (Publication) o;\r\n        return year == that.year && Objects.equals(title, that.title) && Objects.equals(author, that.author);\r\n    }\r\n\r\n    @Override\r\n    public int hashCode() {\r\n        return Objects.hash(title, author, year);\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return getType() + \": Название - \" +  title + \"\\nАвтор - \" + author + \"\\nГод - \" + year;\r\n    }\r\n\r\n    public static int getPublicationCount() {\r\n        return publicationCount;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPReview/Publication.java b/src/main/java/org/serega/OOPReview/Publication.java
+--- a/src/main/java/org/serega/OOPReview/Publication.java	
++++ b/src/main/java/org/serega/OOPReview/Publication.java	
+@@ -2,7 +2,7 @@
+ 
+ import java.util.Objects;
+ 
+-public abstract class Publication implements Printable {
++public abstract class Publication {
+     private String title;
+     private String author;
+     private int year;
+Index: src/main/java/org/serega/BasicsReview/ContactAccountingSystem.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+diff --git a/src/main/java/org/serega/BasicsReview/ContactAccountingSystem.java b/src/main/java/org/serega/BasicsReview/ContactAccountingSystem.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/BasicsReview/ContactAccountingSystem.java	
+@@ -0,0 +1,129 @@
++package org.serega.BasicsReview;
++
++import java.util.Scanner;
++
++public class ContactAccountingSystem {
++    private final static int MAX_CONTACT = 50;
++    private final static String[] names = new String[MAX_CONTACT];
++    private final static String[] numberPhone = new String[MAX_CONTACT];
++    private static int countCont = 0;
++
++    public static void main(String[] args) {
++        Scanner scanner = new Scanner(System.in);
++        boolean exit = false;
++
++        while (!exit) {
++            System.out.println("""
++                    Меню:
++                    1. Добавить контакт.
++                    2. Просмотреть контакты.
++                    3. Найти контакты.
++                    4. Удалить контакты.
++                    5. Выйти.
++                    """);
++            System.out.println("Выберите пункт меню: ");
++            String input = scanner.nextLine();
++
++            if (!input.matches("\\d+")) {
++                System.out.println("Ошибка: Введите число от 1 до 5!");
++                continue;
++            }
++            int choice = Integer.parseInt(input);
++
++            switch (choice) {
++                case 1 -> addContact(scanner);
++                case 2 -> watchContact(scanner);
++                case 3 -> searchContact(scanner);
++                case 4 -> deleteContact(scanner);
++                case 5 -> exit = true;
++                default -> System.out.println("Введите чисоло от 1 до 5!\n");
++
++            }
++        }
++        System.out.println("Выход из программы.");
++        scanner.close();
++    }
++    private static void addContact(Scanner scanner) {
++        if (countCont >= MAX_CONTACT) {
++            System.out.println("Максимальное количество контактов.");
++            return;
++        }
++        System.out.println("Введите имя контакта: ");
++        String name = scanner.nextLine();
++        if (name.isEmpty()) {
++            System.out.println("Введите имя! Имя не может быть пустым!!!");
++            return;
++        }
++
++        System.out.println("Введите номер телефона: ");
++        String numPhone = scanner.nextLine();
++        String checkNumber = "^(?:\\+7|8)\\d{10}$";
++        if (numPhone.isEmpty() && !numPhone.matches(checkNumber)) {
++            System.out.println("Введите номер телефона! Номер не может быть пустым!!!");
++            return;
++        }
++        if (!numPhone.matches(checkNumber)){
++            System.out.println("Некорректный формат номера! Номер начинается с +7 или 8 и содержит 11 цифр!");
++            return;
++        }
++        names[countCont] = name;
++        numberPhone[countCont] = numPhone;
++        countCont++;
++        System.out.println("Контакт добавлен");
++    }
++
++    private static void watchContact(Scanner scanner) {
++        if (countCont == 0) {
++            System.out.println("Список контактов пуст.");
++            return;
++        }
++        System.out.println("Список контактов: ");
++        for (int i = 0; i < countCont; i++) {
++            System.out.printf("%d. %s – %s%n", i + 1, names[i], numberPhone[i]);
++        }
++    }
++    private static void searchContact(Scanner scanner) {
++        System.out.println("Введите имя для поиска");
++        String searchName = scanner.nextLine();
++        boolean found = false;
++
++        for (int i = 0; i < countCont; i++) {
++            if (names[i].equals(searchName)) {
++                System.out.printf("Телефон %s: %s%n", names[i], numberPhone[i]);
++                found = true;
++                break;
++            }
++        }
++        if (!found) {
++            System.out.println("Контакт " + searchName + " не найдет");
++        }
++    }
++    private static void deleteContact(Scanner scanner) {
++        System.out.println("Введите имя для удаления");
++        String deleteName = scanner.nextLine();
++        int index = -1;
++        for (int i = 0; i < countCont; i++) {
++            if (names[i].equals(deleteName)) {
++                index = i;
++                break;
++            }
++        }
++
++        if (index == -1) {
++            System.out.println("Контакт " + deleteName + " не найден");
++            return;
++        }
++
++        for (int i = index; i < countCont - 1; i++) {
++            names[i] = names[i + 1];
++            numberPhone[i] = numberPhone[i + 1];
++        }
++        countCont--;
++        names[countCont] = null;
++        numberPhone[countCont] = null;
++        System.out.println("Контакт успешно удален");
++    }
++
++
++}
++
+Index: src/main/java/org/serega/OOPinJava/Lesson7/Book.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson7/Book.java b/src/main/java/org/serega/OOPinJava/Lesson7/Book.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson7/Book.java	
+@@ -0,0 +1,47 @@
++package org.serega.OOPinJava.Lesson7;
++
++import java.util.Objects;
++
++public class Book {
++    private String title;
++    private String author;
++
++    public Book(String title, String author) {
++        this.title = title;
++        this.author = author;
++    }
++
++    public String getTitle() {
++        return title;
++    }
++
++    public void setTitle(String title) {
++        this.title = title;
++    }
++
++    public String getAuthor() {
++        return author;
++    }
++
++    public void setAuthor(String author) {
++        this.author = author;
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Book book = (Book) o;
++        return Objects.equals(title, book.title) && Objects.equals(author, book.author);
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(title, author);
++    }
++
++    @Override
++    public String toString() {
++        return "Book title: " + title + " Author: " + author;
++    }
++}
+Index: src/main/java/org/serega/Collection/Lesson4/Fruits.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson4/Fruits.java b/src/main/java/org/serega/Collection/Lesson4/Fruits.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson4/Fruits.java	
+@@ -0,0 +1,33 @@
++package org.serega.Collection.Lesson4;
++
++import java.util.HashMap;
++import java.util.Map;
++
++public class Fruits {
++    public static void main(String[] args) {
++        HashMap<String, Integer> fruits = new HashMap<>();
++
++        fruits.put("яблоко", 100);
++        fruits.put("банан", 80);
++        fruits.put("апельсин", 120);
++
++        System.out.println("Начальное содержимое HashMap:");
++        for (Map.Entry<String, Integer> entry : fruits.entrySet()) {
++            System.out.println("Продукт: " + entry.getKey() + ", Количество: " + entry.getValue());
++        }
++        System.out.println();
++
++        fruits.put("банан", 90);
++        System.out.println("После обновления цены на Банан:");
++        for (Map.Entry<String, Integer> entry : fruits.entrySet()) {
++            System.out.println("Продукт: " + entry.getKey() + ", Количество: " + entry.getValue());
++        }
++        System.out.println();
++
++        fruits.remove("апельсин");
++        System.out.println("После удаления Апельсина:");
++        for (Map.Entry<String,Integer> entry : fruits.entrySet()) {
++            System.out.println("Продукт: " + entry.getKey() + ", Количество: " + entry.getValue());
++        }
++    }
++}
+Index: src/main/java/org/serega/ExceptionJava/Lesson1/NumException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionJava/Lesson1/NumException.java b/src/main/java/org/serega/ExceptionJava/Lesson1/NumException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionJava/Lesson1/NumException.java	
+@@ -0,0 +1,27 @@
++package org.serega.ExceptionJava.Lesson1;
++
++import java.util.Scanner;
++
++public class NumException {
++    public static void main(String[] args) {
++        Scanner s = new Scanner(System.in);
++        System.out.println("Введите первое число: ");
++        int num1 = s.nextInt();
++        if (num1 <= 0) {
++            System.out.println("Первое число не может быть 0 или отрицательным");
++            return;
++        }
++        System.out.println("Введите второе число: ");
++        int num2 = s.nextInt();
++
++
++        try {
++            int result = num1 / num2;
++            System.out.println("Результат: " + result);
++        } catch (ArithmeticException e) {
++            System.out.println("Ошибка. Деление на ноль! Попробуйте другое число");
++        }finally {
++            System.out.println("Спасибо за использование программы");
++        }
++    }
++}
+Index: src/main/java/org/serega/Collection/Lesson3/Lesson3Set.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson3/Lesson3Set.java b/src/main/java/org/serega/Collection/Lesson3/Lesson3Set.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson3/Lesson3Set.java	
+@@ -0,0 +1,39 @@
++package org.serega.Collection.Lesson3;
++
++import java.util.*;
++
++public class Lesson3Set {
++    public static void main(String[] args) {
++        List<String> names = new ArrayList<>();
++
++        names.add("Иван");
++        names.add("Кирил");
++        names.add("Дима");
++        names.add("Алексей");
++        names.add("Иван");
++        System.out.println("Исходный список: " + names);
++
++        Set<String> removeName = new HashSet<>(names);
++        System.out.println("Список без дубликатов (HashSet): " + removeName);
++
++        List<String> back = new ArrayList<>(removeName);
++        System.out.println("Список без дубликатов (List): " + back);
++
++        System.out.println();
++
++        Set<String> names1 = new LinkedHashSet<>();
++
++        names1.add("Иван");
++        names1.add("Кирил");
++        names1.add("Дима");
++        names1.add("Алексей");
++        names1.add("Иван");
++        System.out.println("Исходный список: " + names1);
++
++        Set<String> removeName1 = new LinkedHashSet<>(names1);
++        System.out.println("Список без дубликатов (LinkedHashSet): " + removeName1);
++
++        List<String> back1 = new ArrayList<>(removeName1);
++        System.out.println("Список без дубликатов (List): " + back1);
++     }
++}
+Index: src/main/java/org/serega/Collection/Lesson5/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson5/Product.java b/src/main/java/org/serega/Collection/Lesson5/Product.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson5/Product.java	
+@@ -0,0 +1,78 @@
++package org.serega.Collection.Lesson5;
++
++import java.util.HashMap;
++import java.util.Map;
++import java.util.Objects;
++
++
++public class Product {
++    private int id;
++    private String name;
++    private double price;
++
++    public Product(int id, String name, double price) {
++        this.id = id;
++        this.name = name;
++        this.price = price;
++    }
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public double getPrice() {
++        return price;
++    }
++
++    public void setPrice(double price) {
++        this.price = price;
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Product product = (Product) o;
++        return id == product.id && Double.compare(product.price, price) == 0 && Objects.equals(name, product.name);
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(id, name, price);
++    }
++
++    @Override
++    public String toString() {
++        return "Продукты: ID - " + id + " Название - " + name + " Цена - " + price;
++    }
++
++    public static void main(String[] args) {
++        Map<Product, String> products = new HashMap<>();
++
++        Product product1 = new Product(1, "Телефон", 100_000.00);
++        Product product2 = new Product(2, "Компьютер", 150_000.00);
++        Product product3 = new Product(3, "Планшет", 90_000.00);
++
++        products.put(product1, "Новый телефон");
++        products.put(product2, "Мощный компьютер");
++        products.put(product3, "Старый планшет");
++
++        System.out.println("Размер карты продуктов: " + products.size());
++        System.out.println("Содержимое в HasMap:");
++        for (Map.Entry<Product, String> entry : products.entrySet()) {
++            System.out.println("Ключ: " + entry.getKey() + "--> Значение: " + entry.getValue());
++        }
++    }
++}
+Index: src/main/java/org/serega/ExceptionReview/ItemNotFoundException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/ExceptionReview/ItemNotFoundException.java b/src/main/java/org/serega/ExceptionReview/ItemNotFoundException.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/ExceptionReview/ItemNotFoundException.java	
+@@ -0,0 +1,8 @@
++package org.serega.ExceptionReview;
++
++public class ItemNotFoundException extends Exception {
++
++    public ItemNotFoundException(String message) {
++        super(message);
++    }
++}
+Index: src/main/java/org/serega/OOPinJava/Lesson3/Car.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/OOPinJava/Lesson3/Car.java b/src/main/java/org/serega/OOPinJava/Lesson3/Car.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/OOPinJava/Lesson3/Car.java	
+@@ -0,0 +1,42 @@
++package org.serega.OOPinJava.Lesson3;
++
++public class Car {
++    private String brand;
++    private String model;
++    private int year;
++
++    public Car() {
++    }
++
++    public String getBrand() {
++        return this.brand;
++    }
++
++    public void setBrand(String brand) {
++        this.brand = brand;
++    }
++
++    public String getModel() {
++        return this.model;
++    }
++
++    public void setModel(String model) {
++        this.model = model;
++    }
++
++    public int getYear() {
++        return this.year;
++    }
++
++    public void setYear(int year) {
++        if (year < 1886) {
++            System.out.println("There were no cars before");
++        } else {
++            this.year = year;
++        }
++    }
++
++    public String toString() {
++        return "Car - brand='" + this.brand + "', model='" + this.model + "', year=" + this.year;
++    }
++}
+Index: src/main/java/org/serega/Collection/Lesson6/IteratorLesson6.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/serega/Collection/Lesson6/IteratorLesson6.java b/src/main/java/org/serega/Collection/Lesson6/IteratorLesson6.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/org/serega/Collection/Lesson6/IteratorLesson6.java	
+@@ -0,0 +1,25 @@
++package org.serega.Collection.Lesson6;
++
++import java.util.ArrayList;
++import java.util.Iterator;
++
++public class IteratorLesson6 {
++    public static void main(String[] args) {
++        ArrayList<Integer> numbers = new ArrayList<>();
++        for (int i = 1; i <= 20; i++) {
++            numbers.add(i);
++        }
++        Iterator<Integer> iterator = numbers.iterator();
++        while (iterator.hasNext()) {
++            Integer number = iterator.next();
++            if (number % 2 != 0) {
++                iterator.remove();
++            }
++        }
++
++        System.out.println("После удаления нечетных чисел:");
++        for (Integer num : numbers) {
++            System.out.println(num + "");
++        }
++    }
++}
